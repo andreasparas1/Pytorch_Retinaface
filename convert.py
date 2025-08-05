@@ -11,6 +11,7 @@ import cv2
 from models.retinaface import RetinaFace
 from utils.box_utils import decode, decode_landm
 import time
+from PIL import Image
 
 parser = argparse.ArgumentParser(description='Retinaface')
 
@@ -109,11 +110,11 @@ if __name__ == '__main__':
     model = ct.convert(
         traced_model,
         convert_to="mlprogram",
-        inputs=[ct.TensorType(shape=img.shape)],
+        inputs=[ct.ImageType(shape=img.shape)],
         outputs=[ct.TensorType(name=n) for n in output_names]
     )
 
-    model.save("RetinaFace.mlpackage")
+    model.save("RetinaFaceMobile2.mlpackage")
 
     
 

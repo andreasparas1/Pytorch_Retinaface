@@ -11,6 +11,7 @@ import cv2
 from models.retinaface import RetinaFace
 from utils.box_utils import decode, decode_landm
 import time
+from PIL import Image
 
 parser = argparse.ArgumentParser(description='Retinaface')
 
@@ -113,9 +114,11 @@ if __name__ == '__main__':
 
     import coremltools as ct
 
-    mlmodel = ct.models.MLModel("RetinaFaceMobile.mlpackage")
+    mlmodel = ct.models.MLModel("RetinaFace.mlpackage")
 
-    coreml_input = {"inputs": img.numpy()}
+    image = Image.open("./curve/face.jpg").resize(size=(624, 1024))
+
+    coreml_input = {"inputs": image}
 
     coreml_out = mlmodel.predict(coreml_input)
 
@@ -185,7 +188,7 @@ if __name__ == '__main__':
             cv2.circle(img_raw, (b[13], b[14]), 1, (255, 0, 0), 4)
         # save image
 
-        name = "test_coreml_mobile.jpg"
+        name = "test_coreml.jpg"
         cv2.imwrite(name, img_raw)
 
     
